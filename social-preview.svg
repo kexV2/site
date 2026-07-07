@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#101010"/>
+  <circle cx="900" cy="145" r="210" fill="#e0dbd1" opacity="0.045"/>
+  <circle cx="220" cy="480" r="180" fill="#c7bda9" opacity="0.045"/>
+  <text x="80" y="240" fill="#f3f1ec" font-family="Inter, Arial, sans-serif" font-size="82" font-weight="800">Dylan Keogh</text>
+  <text x="84" y="315" fill="#c7bda9" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">Cybersecurity Graduate | Security Operations | Digital Forensics</text>
+  <text x="84" y="390" fill="#bcb8b0" font-family="Inter, Arial, sans-serif" font-size="28">Security monitoring, OSINT attribution, digital forensics and cloud resilience.</text>
+  <rect x="84" y="450" width="370" height="8" fill="#c7bda9" opacity="0.55"/>
+</svg>

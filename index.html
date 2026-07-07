@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en-IE">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dylan Keogh | Cybersecurity Portfolio</title>
+    <meta name="description" content="Cybersecurity portfolio for Dylan Keogh, a Digital Forensics and Cyber Security graduate focused on security operations, digital forensics, cloud security and application security.">
+    <meta name="theme-color" content="#101010">
+    <meta property="og:title" content="Dylan Keogh | Cybersecurity Portfolio">
+    <meta property="og:description" content="Graduate cybersecurity portfolio covering SOC work, honeynets, digital forensics, cloud resilience, OSINT attribution and secure application design.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="social-preview.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dylan Keogh | Cybersecurity Portfolio">
+    <meta name="twitter:description" content="Cybersecurity graduate focused on security operations, digital forensics and practical defensive security.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Dylan Keogh",
+        "jobTitle": "Cybersecurity Graduate",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Co. Dublin / Wicklow",
+          "addressRegion": "Dublin / Wicklow",
+          "addressCountry": "IE"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Technological University Dublin"
+        },
+        "knowsAbout": [
+          "Cybersecurity",
+          "Security operations",
+          "Digital forensics",
+          "Cloud security",
+          "Network security",
+          "Application security",
+          "OSINT"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#home" aria-label="Dylan Keogh home">
+          <span class="brand-mark" aria-hidden="true">DK</span>
+          <span>Dylan Keogh</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span class="sr-only">Toggle navigation</span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#academic">Academic Work</a>
+          <a href="#skills">Skills</a>
+          <a href="#education">Education</a>
+          <a href="#achievements">Achievements</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero section" id="home" aria-labelledby="hero-title">
+        <div class="hero-grid">
+          <article class="profile-card" aria-label="Dylan Keogh profile card">
+            <div class="profile-banner" id="profile-banner" role="img" aria-label="Animated profile banner"></div>
+            <div class="profile-main">
+              <div class="avatar-wrap">
+                <img class="avatar" id="profile-avatar" src="profile-photo.jpg" alt="Photo of Dylan Keogh">
+                <span class="status-dot" aria-hidden="true"></span>
+              </div>
+              <div class="profile-identity">
+                <p class="profile-handle" id="profile-handle">@kexgh</p>
+                <h1 id="hero-title">Dylan Keogh</h1>
+                <p class="hero-role">Cybersecurity Graduate | Security Operations | Digital Forensics</p>
+                <p class="profile-status" id="profile-status"></p>
+              </div>
+            </div>
+            <div class="profile-badges" id="profile-badges"></div>
+            <p class="hero-summary" id="profile-summary"></p>
+            <div class="profile-stats" id="profile-stats"></div>
+            <div class="hero-actions" id="hero-actions">
+              <a class="button primary" href="#projects">View Projects</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="about" aria-labelledby="about-title">
+        <div class="section-heading">
+          <p class="eyebrow">About</p>
+          <h2 id="about-title">Practical defensive security, explained clearly.</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-copy" id="about-copy"></div>
+          <aside class="focus-panel" aria-labelledby="focus-title">
+            <h3 id="focus-title">Current Focus</h3>
+            <ul>
+              <li>Graduate and junior cybersecurity roles</li>
+              <li>Security operations and SOC analysis</li>
+              <li>Digital forensics and evidence-led investigation</li>
+              <li>Cloud security and resilient infrastructure</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="projects" aria-labelledby="projects-title">
+        <div class="section-heading">
+          <p class="eyebrow">Featured Projects</p>
+          <h2 id="projects-title">Security work with context, evidence and clear scope.</h2>
+        </div>
+        <div class="graph-card" aria-labelledby="project-graph-title">
+          <div class="graph-copy">
+            <p class="eyebrow">Project Graph</p>
+            <h3 id="project-graph-title">Explore work by category</h3>
+            <p>Use the graph to see how the portfolio clusters across forensics, cloud defence, monitoring, application security and challenge work.</p>
+          </div>
+          <div class="project-graph" id="project-graph" aria-label="Interactive project category graph"></div>
+          <p class="graph-hint">Select a node to jump to the matching project or work item.</p>
+        </div>
+        <div class="project-grid" id="project-grid"></div>
+      </section>
+
+      <section class="section muted" id="academic" aria-labelledby="academic-title">
+        <div class="section-heading">
+          <p class="eyebrow">Academic Work</p>
+          <h2 id="academic-title">Smaller investigations and practical labs.</h2>
+        </div>
+        <div class="compact-grid" id="academic-grid"></div>
+        <div class="subsection">
+          <div class="section-heading compact">
+            <p class="eyebrow">Other Development Work</p>
+            <h2>Broader software experience.</h2>
+          </div>
+          <div class="compact-grid" id="other-grid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="skills" aria-labelledby="skills-title">
+        <div class="section-heading">
+          <p class="eyebrow">Skills</p>
+          <h2 id="skills-title">Grouped by practical use, not arbitrary ratings.</h2>
+        </div>
+        <div class="skills-grid" id="skills-grid"></div>
+      </section>
+
+      <section class="section muted" id="education" aria-labelledby="education-title">
+        <div class="section-heading">
+          <p class="eyebrow">Education</p>
+          <h2 id="education-title">Formal study in computing, networks and cyber security.</h2>
+        </div>
+        <div class="timeline" id="education-list"></div>
+      </section>
+
+      <section class="section" id="achievements" aria-labelledby="achievements-title">
+        <div class="section-heading">
+          <p class="eyebrow">Achievements</p>
+          <h2 id="achievements-title">Professional development and recognised work.</h2>
+        </div>
+        <div class="achievement-list" id="achievement-list"></div>
+      </section>
+
+      <section class="section contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="contact-grid">
+          <div>
+            <p class="eyebrow">Contact</p>
+            <h2 id="contact-title">Let's connect</h2>
+            <p>I am open to graduate and junior opportunities across cybersecurity, security operations, digital forensics, cloud security and technical security roles.</p>
+          </div>
+          <div class="contact-card">
+            <p><strong>Location</strong><span>Co. Dublin / Wicklow, Ireland</span></p>
+            <div class="contact-links" id="contact-links"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; <span id="year"></span> Dylan Keogh. Built as a focused cybersecurity portfolio.</p>
+    </footer>
+
+    <script src="site-data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
