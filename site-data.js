@@ -1,20 +1,20 @@
-const portfolioData = {
+window.portfolioData = {
   profile: {
     name: "Dylan Keogh",
-    role: "Cybersecurity Graduate | Security Operations | Digital Forensics",
+    role: "Digital Forensics & Cyber Security Graduate",
     location: "Co. Dublin / Wicklow, Ireland",
     profileCard: {
       displayName: "Dylan Keogh",
       handle: "kexgh",
-      status: "Open to graduate and junior cybersecurity roles",
+      status: "Open to opportunities across technology",
       avatarInitials: "DK",
       avatarImage: "profile-photo.jpg",
       bannerImage: "profile-banner.gif",
       bannerGradient: "linear-gradient(135deg, #2a2724 0%, #191919 48%, #3a332b 100%)",
-      badges: ["Cybersecurity Graduate", "SOC", "Digital Forensics", "Cloud Security"],
+      badges: ["Web applications", "IT support", "Security", "Digital forensics"],
       stats: [
         { label: "Degree", value: "BSc 2.1" },
-        { label: "Focus", value: "Defensive Security" },
+        { label: "Work", value: "Software + IT" },
         { label: "Location", value: "Dublin / Wicklow" }
       ]
     },
@@ -47,11 +47,11 @@ const portfolioData = {
       ]
     },
     summary:
-      "Recent BSc graduate in Digital Forensics and Cyber Security with practical experience building security-monitoring environments, distributed honeynets, cloud-resilience solutions and secure application designs. Interested in defensive security, threat detection, digital investigation and building practical tools that make security evidence easier to understand.",
+      "Digital Forensics and Cyber Security graduate with hands-on experience building web applications, supporting business systems, and exploring security, infrastructure and digital investigation. I enjoy making complex technical work practical and clear for the people who use it.",
     about: [
-      "I am a recent Digital Forensics and Cyber Security graduate from Technological University Dublin. My main interests are security operations, network defence, digital forensics, cloud security and application security.",
-      "Throughout college, I built practical security environments using tools including Wazuh, Suricata, T-Pot, the Elastic Stack, AWS, Linux and Wireshark. My final-year research focused on reducing OSINT identity misattribution by presenting analysts with structured evidence rather than relying on single matching indicators.",
-      "I enjoy breaking complex technical problems into understandable evidence, documenting my work clearly and continuing to develop my skills through practical labs, security research and cybersecurity challenges."
+      "I am a Digital Forensics and Cyber Security graduate from Technological University Dublin. My work spans web development, IT support, cloud and network systems, security research and digital investigation.",
+      "Alongside academic projects, I work directly with a local business to build and support tools for daily operations. At college, I built practical environments using Wazuh, Suricata, T-Pot, the Elastic Stack, AWS, Linux and Wireshark. My final-year research explored how to reduce mistaken links between online identities by presenting structured evidence for review.",
+      "I enjoy getting close to a problem, understanding how people work, and turning technical detail into something useful and understandable. I keep learning through hands-on projects, practical labs and cybersecurity challenges."
     ],
     links: {
       github: "",
@@ -59,6 +59,37 @@ const portfolioData = {
       email: "dylan.keogh2@gmail.com",
       cv: ""
     }
+  },
+  clientProject: {
+    title: "Business Operations Web Platform",
+    client: "DJ Hanley · Container rental business, Ireland",
+    dates: "2026 - Present",
+    summary:
+      "Designed and delivered a live management platform replacing paper and whiteboard records across three yards, centralising day-to-day operations for six staff users.",
+    problem:
+      "Container availability and customer details were spread across paper and whiteboard records, making it harder to keep three yards in sync.",
+    contribution:
+      "Worked with business stakeholders to map daily workflows and build authenticated access, customer records, notes, container statuses and yard views for 450+ units.",
+    outcome:
+      "Deployed and handed over the platform, explained it to users, and continued supporting the system after go-live.",
+    testing:
+      "Refined the application through testing, stakeholder walkthroughs and user feedback.",
+    technologies: ["JavaScript", "Supabase", "Web application development", "User support"],
+    facts: [
+      { value: "3", label: "yards" },
+      { value: "450+", label: "container units" },
+      { value: "6", label: "staff users" }
+    ]
+  },
+  experience: {
+    title: "Independent Web Application Developer & IT Support",
+    dates: "2026 - Present",
+    company: "DJ Hanley · Container rental business, Ireland",
+    bullets: [
+      "Owned client delivery from requirements gathering and implementation through testing, deployment, user handover and post-launch support, acting as the direct technical point of contact for operational issues.",
+      "Diagnose issues by gathering context from users, reproducing problems and reviewing application, connectivity and configuration behaviour before explaining fixes in clear, practical terms.",
+      "Continue supporting application, connectivity, email and general technology issues after go-live."
+    ]
   },
   projects: [
     {
@@ -75,7 +106,8 @@ const portfolioData = {
       testing:
         "Focused on structured comparison, evidence presentation, API integration and evaluation of analyst-facing reporting.",
       technologies: ["React", "FastAPI", "Python", "REST APIs", "OSINT", "Git", "Web development"],
-      visual: "attribution"
+      visual: "attribution",
+      type: "build"
     },
     {
       title: "Distributed T-Pot Honeynet",
@@ -91,7 +123,8 @@ const portfolioData = {
       testing:
         "Checked network rules, sensor-to-Hive communication and log pipeline behaviour across the monitoring environment.",
       technologies: ["T-Pot", "Elastic Stack", "Kibana", "Linux", "DigitalOcean", "Cloud networking", "Firewalls", "SSH"],
-      visual: "honeynet"
+      visual: "honeynet",
+      type: "systems"
     },
     {
       title: "Open-Source Security Operations Centre",
@@ -107,7 +140,8 @@ const portfolioData = {
       testing:
         "Reviewed host events, network alerts and dashboards to confirm useful investigation evidence was collected.",
       technologies: ["Wazuh", "Suricata", "auditd", "Elastic Stack", "Linux", "AWS EC2", "Security monitoring"],
-      visual: "soc"
+      visual: "soc",
+      type: "systems"
     },
     {
       title: "VeriScan",
@@ -124,7 +158,8 @@ const portfolioData = {
         "Explored real-versus-manipulated image classification and reviewed generated heatmaps for interpretability.",
       technologies: ["Python", "TensorFlow", "Keras", "XceptionNet", "Grad-CAM", "FastAPI", "HTML", "CSS", "JavaScript"],
       note: "Third-year group project, not Dylan's final-year project.",
-      visual: "veriscan"
+      visual: "veriscan",
+      type: "research"
     },
     {
       title: "Application Security and Threat Modelling",
@@ -140,7 +175,8 @@ const portfolioData = {
       testing:
         "Reviewed threats, requirements and acceptance criteria against secure design goals.",
       technologies: ["OWASP ASVS", "STRIDE", "Data-flow diagrams", "Secure SDLC", "Application security", "Access control", "Web security"],
-      visual: "threat"
+      visual: "threat",
+      type: "research"
     },
     {
       title: "AWS Disaster Recovery and Business Continuity",
@@ -156,7 +192,8 @@ const portfolioData = {
       testing:
         "Reviewed recovery documentation, service dependencies and control coverage.",
       technologies: ["AWS", "EC2", "S3", "IAM", "Cloud security", "Backup and recovery", "Business continuity"],
-      visual: "aws"
+      visual: "aws",
+      type: "systems"
     }
   ],
   academicWork: [
