@@ -745,6 +745,12 @@ p {
   padding: 0.15rem 0 0.15rem 2rem;
 }
 
+.experience-role + .experience-role {
+  border-top: 1px solid var(--line);
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+}
+
 .experience-heading {
   align-items: baseline;
   display: flex;

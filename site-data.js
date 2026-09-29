@@ -81,16 +81,27 @@ window.portfolioData = {
       { value: "6", label: "staff users" }
     ]
   },
-  experience: {
-    title: "Independent Web Application Developer & IT Support",
-    dates: "2026 - Present",
-    company: "DJ Hanley · Container rental business, Ireland",
-    bullets: [
-      "Owned client delivery from requirements gathering and implementation through testing, deployment, user handover and post-launch support, acting as the direct technical point of contact for operational issues.",
-      "Diagnose issues by gathering context from users, reproducing problems and reviewing application, connectivity and configuration behaviour before explaining fixes in clear, practical terms.",
-      "Continue supporting application, connectivity, email and general technology issues after go-live."
-    ]
-  },
+  experience: [
+    {
+      title: "Independent Web Application Developer & IT Support",
+      dates: "2026 - Present",
+      company: "DJ Hanley · Container rental business, Ireland",
+      bullets: [
+        "Owned client delivery from requirements gathering and implementation through testing, deployment, user handover and post-launch support, acting as the direct technical point of contact for operational issues.",
+        "Diagnose issues by gathering context from users, reproducing problems and reviewing application, connectivity and configuration behaviour before explaining fixes in clear, practical terms.",
+        "Continue supporting application, connectivity, email and general technology issues after go-live."
+      ]
+    },
+    {
+      title: "Floor Attendant",
+      dates: "2023 - Present",
+      company: "Star Casino · Bray, Co. Wicklow",
+      bullets: [
+        "Work directly with customers in a fast-paced, regulated environment, communicating procedures clearly, handling questions and resolving issues while maintaining accurate records and consistent service standards.",
+        "Gather relevant facts, explain outcomes calmly and escalate unusual situations with concise supporting information, strengthening customer communication and judgement under pressure."
+      ]
+    }
+  ],
   projects: [
     {
       title: "KEXIS Attribution Framework",

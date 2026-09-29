@@ -118,14 +118,17 @@ function renderAdditional(item) {
 }
 
 function renderExperience() {
-  const role = data.experience;
+  const roles = Array.isArray(data.experience) ? data.experience : [data.experience];
   document.querySelector("#experience-entry").innerHTML = `
-    <div class="experience-heading">
-      <h3>${escapeHtml(role.title)}</h3>
-      <span class="experience-date">${escapeHtml(role.dates)}</span>
-    </div>
-    <p class="experience-company">${escapeHtml(role.company)}</p>
-    <ul>${role.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}</ul>`;
+    ${roles.map((role) => `
+      <article class="experience-role">
+        <div class="experience-heading">
+          <h3>${escapeHtml(role.title)}</h3>
+          <span class="experience-date">${escapeHtml(role.dates)}</span>
+        </div>
+        <p class="experience-company">${escapeHtml(role.company)}</p>
+        <ul>${role.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}</ul>
+      </article>`).join("")}`;
 }
 
 function renderEducation(item) {
