@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en-IE">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171715">
+    <title>Container Yard Operations Platform | Dylan Keogh</title>
+    <meta name="description" content="How I designed and delivered a searchable container operations platform for three yards, working closely with the people who use it.">
+    <meta property="og:title" content="Container Yard Operations Platform | Dylan Keogh">
+    <meta property="og:description" content="A client case study in workflow discovery, interactive yard maps, Supabase and ongoing support.">
+    <meta property="og:type" content="article">
+    <link rel="icon" href="profile-photo.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="case-study.css">
+  </head>
+  <body class="case-study-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header case-header">
+      <a class="wordmark" href="index.html" aria-label="Dylan Keogh, home">
+        <span class="wordmark-avatar">DK</span>
+        <span>Dylan Keogh</span>
+      </a>
+      <a class="case-back-link" href="index.html#work"><span aria-hidden="true">&#8592;</span> Selected work</a>
+    </header>
+
+    <main class="case-main" id="main">
+      <article>
+        <header class="case-hero">
+          <p class="case-kicker">Client project <span aria-hidden="true">/</span> Operations software</p>
+          <h1>Container Yard Operations Platform</h1>
+          <p class="case-lede">I replaced paper-and-whiteboard tracking with a shared, searchable system for managing container operations across three yards.</p>
+          <dl class="case-facts" aria-label="Project details">
+            <div><dt>Role</dt><dd>Independent developer &amp; IT support</dd></div>
+            <div><dt>Period</dt><dd>2026 - Present</dd></div>
+            <div><dt>Scale</dt><dd>3 yards · 450+ units · 6 staff</dd></div>
+            <div><dt>Tools</dt><dd>JavaScript · Supabase</dd></div>
+          </dl>
+        </header>
+
+        <figure class="case-figure">
+          <img src="warehouse.png" alt="Overhead container-yard plan used as the base for the interactive map">
+          <figcaption>Each yard layout is a visual index into its container records.</figcaption>
+        </figure>
+
+        <div class="case-content">
+          <section class="case-section" id="starting-point">
+            <div class="case-section-label"><span>01</span><h2>The starting point</h2></div>
+            <div class="case-section-copy">
+              <p>The operation was being tracked with pen-and-paper records and whiteboards. The owner wanted a clearer way to see what was happening across the yards and to find container and customer information without searching through separate records.</p>
+              <p>The idea for the map came from a casino floor-management system I had used in another role. It represented machines as boxes in their physical positions. The owner saw that visual approach and asked whether we could adapt it to container yards.</p>
+              <p>I carried over the idea of a map people could scan at a glance, then adapted it to the business: units are positioned on their yard layout and colour-coded by status, with a searchable list for staff who prefer to look something up directly.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="working-together">
+            <div class="case-section-label"><span>02</span><h2>Designing it together</h2></div>
+            <div class="case-section-copy">
+              <p>I worked directly with the owner to understand the existing process and what the team needed to record. We held weekly follow-ups and meetings throughout the work. I showed progress, gathered feedback and adjusted the map, searchable list and data-entry flow as the requirements became clearer.</p>
+              <p>This gave the client regular opportunities to check that the product felt right for their operation. It also helped me resolve practical details early, instead of treating the first version as a finished specification.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="experience">
+            <div class="case-section-label"><span>03</span><h2>Building the experience</h2></div>
+            <div class="case-section-copy">
+              <p>I built the frontend with HTML, CSS and JavaScript. Each yard has its own background plan and container-position data. I render the container positions as interactive SVG shapes over the map, keeping each unit selectable while preserving the real layout as the view scales.</p>
+              <ul class="case-list">
+                <li><strong>Map and list:</strong> staff can select a container on the map or find it through the searchable list.</li>
+                <li><strong>Status at a glance:</strong> available, rented and bad-debt units have distinct colours and live totals.</li>
+                <li><strong>Search and filters:</strong> narrow the list by container or customer details, status and size.</li>
+                <li><strong>Container editor:</strong> update the display name, size, status, customer, phone or reference, and notes.</li>
+                <li><strong>Accessible controls:</strong> map units can be focused and selected with a keyboard as well as a pointer.</li>
+              </ul>
+              <p>The map is backed by structured records rather than being the data store itself. This lets the visual layout and searchable list present the same underlying container information in two useful ways.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="technical-design">
+            <div class="case-section-label"><span>04</span><h2>Data and live updates</h2></div>
+            <div class="case-section-copy">
+              <p>I used Supabase for the application’s relational data and authenticated access. The model separates yards, containers, customers, rentals and staff profiles, linking each yard to its units and each rental to its container and customer. It supports container size and status, customer contact details, rental status and notes, and rental fields such as monthly rate and deposit.</p>
+              <p>When a yard loads, the app inserts any missing container records using the yard and internal container code as the conflict key. Existing records are left in place, which makes this setup repeatable without creating duplicate units.</p>
+              <p>Changes to containers, rentals and customers are received through Supabase Realtime. I debounce those events before refreshing the map, list and counts, and avoid rebuilding the editor while a staff member is actively editing it.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="access-and-accountability">
+            <div class="case-section-label"><span>05</span><h2>Access and accountability</h2></div>
+            <div class="case-section-copy">
+              <p>Staff sign in with Supabase Auth. The application checks that a signed-in user has an active staff profile, and only shows the administration area to an administrator.</p>
+              <p>I built the privileged staff-management operations as a Supabase Edge Function using TypeScript and Deno. It verifies the caller’s session and administrator profile before handling invitations, role changes, account activation or deletion. The admin interface also supports password-reset requests through Supabase Auth. The function prevents administrators from changing their own access through those actions and protects the last active administrator account.</p>
+              <p>Container and rental records store staff references and timestamps for creation and updates. The interface uses those records to show who last changed a unit and when; this is operational accountability metadata, not an immutable audit log.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="delivery">
+            <div class="case-section-label"><span>06</span><h2>Delivery and what changed</h2></div>
+            <div class="case-section-copy">
+              <p>I took the work from requirements gathering through implementation, testing, deployment and handover. After launch, I explained the system to staff and continued supporting the application and the business’s wider technology needs.</p>
+              <p>The result is a shared platform for six staff to manage more than 450 container units across three yards, replacing the previous paper-and-whiteboard approach. I have not assigned a time-saving or error-reduction figure because we did not measure one.</p>
+              <p>This project taught me to keep the people using a system involved throughout delivery. Weekly conversations shaped the product just as much as the code: they helped turn an initial map idea into a practical tool for the work happening on site.</p>
+            </div>
+          </section>
+        </div>
+
+        <footer class="case-end">
+          <a class="case-back-link" href="index.html#work"><span aria-hidden="true">&#8592;</span> Back to selected work</a>
+          <a class="case-contact-link" href="index.html#contact">Get in touch <span aria-hidden="true">&#8599;</span></a>
+        </footer>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Dylan Keogh</span>
+      <span>Co. Dublin / Wicklow</span>
+    </footer>
+  </body>
+</html>

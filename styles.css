@@ -449,6 +449,10 @@ p {
   overflow: hidden;
 }
 
+.auth0-feature {
+  margin-top: 2rem;
+}
+
 .client-visual {
   align-items: center;
   background: #e3e0d8;
@@ -554,6 +558,25 @@ p {
 .technology-list li {
   color: var(--muted);
   font-size: 0.78rem;
+}
+
+.case-study-link {
+  align-items: center;
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--ink);
+  display: inline-flex;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  padding-bottom: 0.2rem;
+  text-decoration: none;
+}
+
+.case-study-link span {
+  color: var(--accent);
+}
+
+.case-study-link:hover {
+  border-color: var(--accent);
 }
 
 .project-toolbar {

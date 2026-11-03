@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en-IE">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171715">
+    <title>Identity Integration with Auth0 | Dylan Keogh</title>
+    <meta name="description" content="A React learning-platform portal exploring Auth0 authentication, PKCE and identity claims.">
+    <meta property="og:title" content="Identity Integration with Auth0 | Dylan Keogh">
+    <meta property="og:description" content="How I integrated Auth0 into a React learning-platform portal and used identity claims to personalise the account view.">
+    <meta property="og:type" content="article">
+    <link rel="icon" href="profile-photo.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="case-study.css">
+  </head>
+  <body class="case-study-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header case-header">
+      <a class="wordmark" href="index.html" aria-label="Dylan Keogh, home">
+        <span class="wordmark-avatar">DK</span>
+        <span>Dylan Keogh</span>
+      </a>
+      <a class="case-back-link" href="index.html#work"><span aria-hidden="true">&#8592;</span> Selected work</a>
+    </header>
+
+    <main class="case-main" id="main">
+      <article>
+        <header class="case-hero">
+          <p class="case-kicker">Independent project <span aria-hidden="true">/</span> Identity and access management</p>
+          <h1>Identity Integration with Auth0</h1>
+          <p class="case-lede">I connected a React learning-platform portal to Auth0 so sign-in, account creation and user identity could be handled by a dedicated identity provider.</p>
+          <dl class="case-facts" aria-label="Project details">
+            <div><dt>Application</dt><dd>KEXIS Learning Platform</dd></div>
+            <div><dt>Frontend</dt><dd>React · Vite</dd></div>
+            <div><dt>Identity</dt><dd>Auth0 React SDK</dd></div>
+            <div><dt>Protocol</dt><dd>OpenID Connect · PKCE</dd></div>
+          </dl>
+        </header>
+
+        <figure class="case-figure auth0-case-figure">
+          <img src="auth0-login-screen.png" alt="KEXIS Learning Platform welcome screen offering Log In and Create Account through Auth0">
+          <figcaption>The portal delegates sign-in and account creation to Auth0.</figcaption>
+        </figure>
+
+        <div class="case-content">
+          <section class="case-section" id="starting-point">
+            <div class="case-section-label"><span>01</span><h2>The starting point</h2></div>
+            <div class="case-section-copy">
+              <p>Authentication in a web application involves more than collecting a username and password. The application also needs to start a sign-in flow, receive the user after authentication, maintain its authentication state and decide how to present identity information.</p>
+              <p>I built this project to explore those responsibilities in a React application using Auth0 as the identity provider. The portal has a signed-out welcome screen and a signed-in account overview, giving the integration a clear user journey to support.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="experience">
+            <div class="case-section-label"><span>02</span><h2>Designing the experience</h2></div>
+            <div class="case-section-copy">
+              <p>I kept the portal’s own authentication interface deliberately small. A visitor can choose to log in or create an account; the application redirects to Auth0 rather than collecting passwords itself.</p>
+              <p>The login action starts a standard redirect. The account-creation action adds Auth0’s <code>screen_hint=signup</code> parameter to request the sign-up experience. After authentication, the user returns to the application root, where the Auth0 React SDK processes the callback and exposes the signed-in state.</p>
+              <p>When a user signs out, the application redirects back to the same root page. The screenshot shows the signed-out experience; the account dashboard is rendered conditionally after Auth0 reports an authenticated user.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="integration">
+            <div class="case-section-label"><span>03</span><h2>Integrating the SDK</h2></div>
+            <div class="case-section-copy">
+              <p>I built the frontend with React and Vite and wrapped the application in Auth0’s <code>Auth0Provider</code>. The provider reads the Auth0 domain and client ID from Vite environment variables, sets the redirect URI to the application root, and requests the OpenID Connect scopes <code>openid profile email</code>.</p>
+              <p>The installed Auth0 SPA SDK handles the Authorization Code flow with PKCE for the browser application. I rely on the SDK for the redirect transaction and callback handling rather than implementing token exchange or the PKCE verifier myself.</p>
+              <p>React consumes the SDK’s loading, authentication and error state to switch between the welcome screen and the account view. It also presents a retry action when the SDK reports an authentication error.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="identity-claims">
+            <div class="case-section-label"><span>04</span><h2>Using identity claims</h2></div>
+            <div class="case-section-copy">
+              <p>Once authenticated, the application retrieves the ID token claims through <code>getIdTokenClaims()</code>. It reads standard profile information such as email from the Auth0 user object and looks for namespaced claims for account type, full name, occupation and learning or creator profile details.</p>
+              <p>The account type changes which fields appear in the profile summary. A learner view can show learning goals and level, while a creator view can show subject area and experience level. The interface also displays whether the email is verified.</p>
+              <p>The React code consumes these claims; it does not contain an onboarding form, a profile database, or the Auth0 Action that would issue custom claims. Those parts would need to be verified in the identity-provider configuration. The account type is used to personalise the view, not to enforce access permissions.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="security-boundaries">
+            <div class="case-section-label"><span>05</span><h2>Security boundaries</h2></div>
+            <div class="case-section-copy">
+              <p>I use the ID token claims as identity information for the client-side profile display. The project does not configure an API audience or call a protected backend, and it does not treat the ID token as an API credential.</p>
+              <p>The authenticated state controls which interface the browser renders. It is not a server-side authorization control: learner and creator labels do not prove that protected data or operations would be secured in a real backend. A production system would need explicit authorization checks at the API or data layer.</p>
+              <p>MFA, social or database connections, password policies, Auth0 Forms and the custom-claim Action are not defined in the application repository, so I have not presented them as verified features of this implementation.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="outcome">
+            <div class="case-section-label"><span>06</span><h2>The outcome and what I learned</h2></div>
+            <div class="case-section-copy">
+              <p>The project brings together Auth0-managed sign-in and account creation, redirect handling through the React SDK, sign-out, and an account overview that can display different identity claims.</p>
+              <p>It helped me understand how an identity provider and a frontend divide responsibilities. Auth0 establishes the authenticated identity; the application decides how to present that identity. If the application later protects data or APIs, it must add authorization checks beyond changing the client-side view.</p>
+              <p>A next step would be to verify the tenant-side onboarding and claim configuration, test the complete authenticated journey, and add a backend API with explicit authorization rules. I have not described those as completed work.</p>
+            </div>
+          </section>
+        </div>
+
+        <footer class="case-end">
+          <a class="case-back-link" href="index.html#work"><span aria-hidden="true">&#8592;</span> Back to selected work</a>
+          <a class="case-contact-link" href="index.html#contact">Get in touch <span aria-hidden="true">&#8599;</span></a>
+        </footer>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Dylan Keogh</span>
+      <span>Co. Dublin / Wicklow</span>
+    </footer>
+  </body>
+</html>
