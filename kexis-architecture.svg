@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="384" viewBox="0 0 720 384" role="img" aria-labelledby="title">
+  <title id="title">KEXIS architecture</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0 10 5 0 10z" fill="#736856"/>
+    </marker>
+  </defs>
+  <rect width="720" height="384" rx="6" fill="#f2efe7"/>
+  <path d="M36 56h648" stroke="#cdc5b7"/>
+  <text x="36" y="40" fill="#28251f" font-family="Georgia, serif" font-size="25">KEXIS / Attribution pipeline</text>
+  <g fill="none" stroke="#736856" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M342 103h34"/>
+    <path d="M531 134v19"/>
+    <path d="M189 238v21"/>
+    <path d="M342 293h34"/>
+    <path d="M531 326v21"/>
+  </g>
+  <g stroke="#bcb2a0" stroke-width="1.5">
+    <rect x="36" y="72" width="306" height="62" rx="4" fill="#fcfaf5"/>
+    <rect x="378" y="72" width="306" height="62" rx="4" fill="#fcfaf5"/>
+    <rect x="36" y="154" width="648" height="84" rx="4" fill="#e9e3d7"/>
+    <rect x="36" y="260" width="306" height="66" rx="4" fill="#fcfaf5"/>
+    <rect x="378" y="260" width="306" height="66" rx="4" fill="#fcfaf5"/>
+  </g>
+  <g fill="#28251f" font-family="Aptos, Segoe UI, sans-serif" font-size="21" font-weight="600">
+    <text x="52" y="99">React form</text>
+    <text x="394" y="99">FastAPI</text>
+    <text x="52" y="182">Public data collectors</text>
+    <text x="52" y="286">Feature extraction</text>
+    <text x="394" y="286">Weighted score</text>
+  </g>
+  <g fill="#524a3d" font-family="Aptos, Segoe UI, sans-serif" font-size="17">
+    <text x="52" y="121">Candidate account identifiers</text>
+    <text x="394" y="121">POST /analyze</text>
+    <text x="52" y="310">Username · topic · activity</text>
+    <text x="394" y="310">40% username · 30% topic · 30% activity</text>
+  </g>
+  <g fill="#fcfaf5" stroke="#bcb2a0">
+    <rect x="52" y="193" width="196" height="32" rx="4"/>
+    <rect x="262" y="193" width="196" height="32" rx="4"/>
+    <rect x="472" y="193" width="196" height="32" rx="4"/>
+  </g>
+  <g fill="#28251f" font-family="Aptos, Segoe UI, sans-serif" font-size="17" text-anchor="middle">
+    <text x="150" y="215">GitHub</text>
+    <text x="360" y="215">Mastodon</text>
+    <text x="570" y="215">YouTube (optional)</text>
+  </g>
+  <text x="531" y="368" fill="#524a3d" font-family="Aptos, Segoe UI, sans-serif" font-size="17" text-anchor="middle">Score, features and evidence → React</text>
+</svg>

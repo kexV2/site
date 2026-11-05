@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en-IE">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171715">
+    <title>KEXIS Attribution Framework | Dylan Keogh</title>
+    <meta name="description" content="A final-year cybersecurity project comparing public account evidence from GitHub, Mastodon and YouTube through a weighted OSINT similarity score.">
+    <meta property="og:title" content="KEXIS Attribution Framework | Dylan Keogh">
+    <meta property="og:description" content="How I built an OSINT prototype that shows which public signals contribute to an account attribution assessment.">
+    <meta property="og:type" content="article">
+    <link rel="icon" href="profile-photo.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="case-study.css">
+  </head>
+  <body class="case-study-page kexis-case-study">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header case-header">
+      <a class="wordmark" href="index.html" aria-label="Dylan Keogh, home">
+        <span class="wordmark-avatar">DK</span>
+        <span>Dylan Keogh</span>
+      </a>
+      <a class="case-back-link" href="index.html#work"><span aria-hidden="true">&#8592;</span> Selected work</a>
+    </header>
+
+    <main class="case-main" id="main">
+      <article>
+        <header class="case-hero">
+          <p class="case-kicker">Final-year project <span aria-hidden="true">/</span> OSINT and digital forensics</p>
+          <h1>KEXIS Attribution Framework</h1>
+          <p class="case-lede">I built a prototype for open-source intelligence (OSINT) investigations to help assess whether public accounts could share an owner. KEXIS compares usernames, vocabulary and activity patterns, then shows the evidence behind its score.</p>
+          <dl class="case-facts" aria-label="Project details">
+            <div><dt>Role</dt><dd>Individual research and development</dd></div>
+            <div><dt>Year</dt><dd>2026</dd></div>
+            <div><dt>Stack</dt><dd>Python · FastAPI · React · Vite</dd></div>
+            <div><dt>Sources</dt><dd>GitHub · Mastodon · YouTube</dd></div>
+          </dl>
+        </header>
+
+        <figure class="case-figure">
+          <img src="kexis-architecture.svg" alt="Architecture diagram. A React form sends account identifiers to FastAPI, which collects public data from GitHub, Mastodon and optionally YouTube. Feature extraction and weighted scoring produce a breakdown that returns to React." width="720" height="384">
+          <figcaption>Architecture of the final prototype. The response includes the score, feature values and a summary of each platform’s evidence.</figcaption>
+        </figure>
+
+        <div class="case-content">
+          <section class="case-section" id="problem">
+            <div class="case-section-label"><span>01</span><h2>The investigative problem</h2></div>
+            <div class="case-section-copy">
+              <p>Suppose two unrelated people choose the handle <code>packet-garden</code>. If an investigator assumes those accounts share an owner, they might attribute one person’s posts or repositories to the other. A copied bio or a shared technical interest can make that mistake easier to miss.</p>
+              <p>For my final-year cybersecurity project, I wanted to make that comparison easier to examine. I started with accounts the investigator had already identified and built a workflow that exposes which public signals agree and how much each contributes to the result.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="architecture">
+            <div class="case-section-label"><span>02</span><h2>From research to architecture</h2></div>
+            <div class="case-section-copy">
+              <p>I started with a Python command-line prototype that looked up a GitHub profile, then added Mastodon for a cross-platform comparison. In the web version, a React form sends candidate identifiers to <code>POST /analyze</code>. The FastAPI handler in <code>api.py</code> calls the platform collectors, builds the comparison inputs and passes three feature values to <code>scoring_engine/confidence_model.py</code>.</p>
+              <p>Platform-specific collectors handle the different API response shapes. GitHub and Mastodon profiles are required to proceed. Once those profiles resolve, the comparison can still run when an activity or content fetch yields an empty sample. I added YouTube later as an optional source of text and publication times.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="collection">
+            <div class="case-section-label"><span>03</span><h2>Collecting public evidence</h2></div>
+            <div class="case-section-copy">
+              <dl class="kexis-details">
+                <div>
+                  <dt>GitHub</dt>
+                  <dd>I used the public profile and repositories endpoints for the username, bio, repository names, descriptions and reported languages. For timing, the collector reads <code>created_at</code> from the public events endpoint and considers up to 100 entries from a single response.</dd>
+                </div>
+                <div>
+                  <dt>Mastodon</dt>
+                  <dd>The collector searches through <code>mastodon.social</code>, preferring an exact account or username match before falling back to the first result. It strips HTML tags from bios and posts, requesting 10 statuses for text and 40 in a separate request for timestamps.</dd>
+                </div>
+                <div>
+                  <dt>YouTube</dt>
+                  <dd>A <code>/channel/…</code> URL goes directly to a channel lookup. Handles and names go through channel search. Once a channel resolves, the collector requests up to 10 recent videos for titles, descriptions and publication timestamps. A channel can resolve even when the video request yields no usable evidence.</dd>
+                </div>
+              </dl>
+            </div>
+          </section>
+
+          <section class="case-section" id="features">
+            <div class="case-section-label"><span>04</span><h2>Extracting comparable signals</h2></div>
+            <div class="case-section-copy">
+              <dl class="kexis-details">
+                <div>
+                  <dt>Username similarity (U)</dt>
+                  <dd>Python’s <code>SequenceMatcher</code> compares the resolved GitHub and Mastodon usernames after lowercasing, trimming whitespace and removing hyphens and underscores.</dd>
+                </div>
+                <div>
+                  <dt>Topic similarity (T)</dt>
+                  <dd>I combine GitHub’s username, bio and repository metadata into one text source. The other combines Mastodon’s username, display name, bio and posts with YouTube channel and video metadata. The code lowercases the text, splits on punctuation and whitespace, and drops stopwords and tokens shorter than three characters. Jaccard similarity divides the number of shared unique tokens by the size of the union. The response also includes the sorted shared keywords.</dd>
+                </div>
+                <div>
+                  <dt>Activity similarity (A)</dt>
+                  <dd>I compare GitHub events with the combined Mastodon and YouTube timestamps. Each side is normalised into distributions across 24 hours and seven weekdays. The overlap is the sum of the smaller proportion in each corresponding bucket. The feature gives hourly overlap 70% of the weight and weekday overlap 30%. Unparseable timestamps are skipped, and an empty side produces zero overlap.</dd>
+                </div>
+              </dl>
+            </div>
+          </section>
+
+          <section class="case-section" id="scoring">
+            <div class="case-section-label"><span>05</span><h2>How the score evolved</h2></div>
+            <div class="case-section-copy">
+              <ol class="case-list">
+                <li><strong>GitHub smoke test.</strong> <code>C = U</code>. The first version scored the entered username against the login returned by GitHub.</li>
+                <li><strong>Cross-platform comparison.</strong> <code>C = 0.70U + 0.30T</code>. Adding topic overlap gave vocabulary a role in the score while usernames still carried most of the weight.</li>
+                <li><strong>Three-signal model.</strong> <code>C = 0.40U + 0.30T + 0.30A</code>. I reduced the username weight and added timing as a separate signal.</li>
+              </ol>
+              <p>FastAPI assigns the band before rounding the response to two decimal places. Scores below <code>0.40</code> are Low, scores from <code>0.40</code> up to <code>0.70</code> are Moderate, and scores at or above <code>0.70</code> are High.</p>
+              <p class="kexis-note">These bands describe a weighted similarity score. Common ownership requires independent corroboration, and the weights and thresholds have no probability calibration.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="interface">
+            <div class="case-section-label"><span>06</span><h2>Connecting the API to React</h2></div>
+            <div class="case-section-copy">
+              <p>The request requires <code>github_username</code> and <code>mastodon_handle</code>. When I first added a required <code>youtube_channel</code> field, the older two-field request failed validation with HTTP 422. The revised schema defaults YouTube to <code>None</code> and only calls the collector when given a non-blank value.</p>
+              <p>The response separates <code>github</code>, <code>mastodon</code> and <code>youtube</code> evidence from <code>features</code> and <code>result</code>. The React dashboard shows the score and classification, the three feature values, shared keywords, and each platform’s sample size and most active hours. Those counts help an investigator distinguish a sparse comparison from one based on more records.</p>
+              <figure class="case-figure kexis-dashboard">
+                <img src="kexis-dashboard.png" alt="Archived KEXIS dashboard before analysis, with fields for GitHub, Mastodon and YouTube alongside score and evidence panels" width="618" height="807" loading="lazy">
+                <figcaption>The React dashboard before an analysis run, from the project archive.</figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <section class="case-section" id="testing">
+            <div class="case-section-label"><span>07</span><h2>What the prototype tests showed</h2></div>
+            <div class="case-section-copy">
+              <p>The March figures come from my development notes. The May figures come from a saved API response and dashboard captures.</p>
+              <dl class="kexis-details kexis-observations">
+                <div>
+                  <dt>11 March 2026 · GitHub smoke tests · 1.00</dt>
+                  <dd>Two GitHub lookups returned a username similarity and overall score of <code>1.00</code>. This exercised the lookup and normalisation path against the returned login.</dd>
+                </div>
+                <div>
+                  <dt>11 March 2026 · Two-signal comparison · 0.54</dt>
+                  <dd>Comparing GitHub’s <code>Kexgh</code> with Mastodon’s <code>xgh</code> returned <code>U = 0.75</code> and <code>T = 0.05</code>, with <code>cyber</code> among the shared keywords. The 70/30 model returned <code>0.54</code> (Moderate).</dd>
+                </div>
+                <div>
+                  <dt>May 2026 · Three-signal API run · 0.34</dt>
+                  <dd>The recorded response showed <code>U = 0.75</code>, <code>T = 0.12</code> and <code>A = 0.00</code>. The 40/30/30 model returned <code>0.34</code> (Low likelihood). The capture contains three GitHub timestamps, one Mastodon timestamp and YouTube channel metadata with empty video lists and zero timestamps. The activity score reflects GitHub’s overlap with the pooled Mastodon and YouTube sample.</dd>
+                </div>
+              </dl>
+              <details class="kexis-response">
+                <summary>See the captured 0.34 API response excerpt</summary>
+                <pre><code>{
+  "github": {"activity_sample_size": 3},
+  "mastodon": {"activity_sample_size": 1},
+  "youtube": {
+    "video_titles": [],
+    "video_descriptions": [],
+    "activity_sample_size": 0
+  },
+  "features": {
+    "username_similarity": 0.75,
+    "topic_similarity": 0.12,
+    "activity_similarity": 0.0,
+    "shared_keywords": [
+      "cyber", "digital", "forensics", "security"
+    ]
+  },
+  "result": {
+    "confidence_score": 0.34,
+    "classification": "Low likelihood"
+  }
+}</code></pre>
+              </details>
+              <table class="kexis-results">
+                <caption>Three-signal dashboard captures · 7 May 2026</caption>
+                <thead>
+                  <tr><th scope="col">GitHub / Mastodon</th><th scope="col">Score</th><th scope="col">Band</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>kexgh / kexgh</td><td>0.74</td><td>High</td></tr>
+                  <tr><td>kexgh / xgh</td><td>0.50</td><td>Moderate</td></tr>
+                  <tr><td>kexv2 / xgh</td><td>0.28</td><td>Low</td></tr>
+                  <tr><td>geerlingguy / geerlingguy</td><td>0.57</td><td>Moderate</td></tr>
+                </tbody>
+              </table>
+              <p>All Mastodon handles in the captures used <code>mastodon.social</code>. The first three runs also included the same test YouTube channel, and the fourth used Jeff Geerling’s public channel. The two exact username matches reached different bands because the other features differed. Estimating attribution accuracy would require labelled account pairs and a consistent evaluation across versions.</p>
+            </div>
+          </section>
+
+          <section class="case-section" id="limitations">
+            <div class="case-section-label"><span>08</span><h2>Limitations and lessons</h2></div>
+            <div class="case-section-copy">
+              <p>Resolving the intended account is part of the evidence problem. Mastodon and YouTube search fallbacks can select an unintended account. Matching handles can collide or be copied, and exact-token overlap misses synonyms while rewarding vocabulary common to a whole community. Usernames also feed the topic comparison, so the signals can overlap.</p>
+              <p>Public events, statuses and uploads are different kinds of activity. Small or uneven samples, scheduling and time zones can change the overlap. The implementation reads the hour and weekday directly from each parsed timestamp, so differing offsets can put simultaneous events in different buckets. Some fallback text also enters the topic token sets, and unavailable timing evidence can contribute zero under the fixed weights.</p>
+              <p>The project taught me to show the evidence that produced a score and the gaps in that evidence together. A reviewer needs both to decide how much weight the comparison deserves.</p>
+            </div>
+          </section>
+        </div>
+
+        <footer class="case-end">
+          <a class="case-back-link" href="index.html#work"><span aria-hidden="true">&#8592;</span> Back to selected work</a>
+          <a class="case-contact-link" href="index.html#contact">Get in touch <span aria-hidden="true">&#8599;</span></a>
+        </footer>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <span>Dylan Keogh</span>
+      <span>Co. Dublin / Wicklow</span>
+    </footer>
+  </body>
+</html>

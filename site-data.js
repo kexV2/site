@@ -104,23 +104,6 @@ window.portfolioData = {
   ],
   projects: [
     {
-      title: "KEXIS Attribution Framework",
-      category: "Final-Year Project | OSINT | Digital Forensics",
-      summary:
-        "An OSINT attribution-support framework designed to reduce the risk of incorrectly linking online accounts to the same person.",
-      problem:
-        "Username matches and surface-level similarities can create misleading attribution paths when analysts investigate online identities.",
-      contribution:
-        "Built a React frontend and FastAPI backend to collect, compare and present account information and identity indicators for analyst review.",
-      outcome:
-        "Produced a more structured, explainable and defensible approach to reviewing attribution evidence.",
-      testing:
-        "Focused on structured comparison, evidence presentation, API integration and evaluation of analyst-facing reporting.",
-      technologies: ["React", "FastAPI", "Python", "REST APIs", "OSINT", "Git", "Web development"],
-      visual: "attribution",
-      type: "build"
-    },
-    {
       title: "Distributed T-Pot Honeynet",
       category: "Network Security | Cloud Security | Threat Monitoring",
       summary:

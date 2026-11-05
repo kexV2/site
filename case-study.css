@@ -171,6 +171,86 @@
   color: var(--ink);
 }
 
+.kexis-case-study code {
+  overflow-wrap: anywhere;
+}
+
+.kexis-details {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+}
+
+.kexis-details dt {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.kexis-details dd {
+  margin: 0.25rem 0 0;
+}
+
+.kexis-note {
+  background: var(--page-raised);
+  border-left: 2px solid var(--accent);
+  padding: 0.85rem 1rem;
+}
+
+.kexis-dashboard {
+  margin: 1.4rem 0 0;
+}
+
+.kexis-case-study .kexis-dashboard img {
+  background: var(--page-raised);
+  max-height: none;
+  padding: 0.75rem;
+}
+
+.kexis-response {
+  background: var(--page-raised);
+  border: 1px solid var(--line);
+  margin: 1rem 0 1.4rem;
+  padding: 0.7rem 0.9rem;
+}
+
+.kexis-response summary {
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.kexis-response pre {
+  font-size: 0.85rem;
+  margin: 0.65rem 0 0;
+  white-space: pre-wrap;
+}
+
+.kexis-results {
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 1.3rem 0 0.8rem;
+  width: 100%;
+}
+
+.kexis-results caption {
+  color: var(--ink);
+  font-weight: 600;
+  padding-bottom: 0.45rem;
+  text-align: left;
+}
+
+.kexis-results th,
+.kexis-results td {
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+  padding: 0.45rem 0.45rem 0.45rem 0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.kexis-results th {
+  color: var(--ink);
+}
+
 @media (max-width: 760px) {
   .case-main {
     padding-top: 3.2rem;

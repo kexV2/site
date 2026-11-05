@@ -449,7 +449,7 @@ p {
   overflow: hidden;
 }
 
-.auth0-feature {
+.client-feature + .client-feature {
   margin-top: 2rem;
 }
 
